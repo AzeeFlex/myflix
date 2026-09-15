@@ -58,14 +58,13 @@ def main():
 
         if mp4:
             print(f"Found stream for: {title}")
-            episode_data.append(
-                {
-                    "title": title,
-                    "mp4": mp4,
-                }
-            )
+            episode_data.append({
+                "title": title,
+                "mp4": mp4
+            })
 
-    html_content = """<!DOCTYPE html>
+    html_content = """
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -74,16 +73,16 @@ def main():
 
 <style>
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: Arial, sans-serif;
     background: #121212;
-    color: #fff;
+    color: #ffffff;
     margin: 0;
     padding: 20px;
 }
 
 .container {
     max-width: 900px;
-    margin: 0 auto;
+    margin: auto;
 }
 
 h1 {
@@ -93,8 +92,7 @@ h1 {
 
 video {
     width: 100%;
-    border-radius: 8px;
-    background: #000;
+    background: black;
     margin-bottom: 20px;
 }
 
@@ -105,14 +103,10 @@ video {
 }
 
 .item {
-    padding: 15px;
     background: #1e1e1e;
-    border-radius: 6px;
+    padding: 15px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .item:hover {
@@ -121,55 +115,47 @@ video {
 
 .item.active {
     border-left: 4px solid #e50914;
-    background: #252525;
 }
 
-a.direct-link {
-    color: #888;
-    text-decoration: none;
-    font-size: 0.9em;
-    border: 1px solid #444;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-a.direct-link:hover {
-    color: #fff;
-    border-color: #666;
+.direct-link {
+    display: inline-block;
+    margin-top: 5px;
+    color: #4da6ff;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
-<h1>Bigg Boss Season 20</h1>
+    <h1>Bigg Boss Season 20</h1>
 
-<video id="player" controls autoplay></video>
+    <video id="player" controls autoplay></video>
 
-<div class="playlist" id="playlist">
+    <div class="playlist">
 """
 
     for ep in episode_data:
         html_content += f"""
-<div class="item" onclick="playVideo('{ep['mp4']}', this)">
-    <span>{ep['title']}</span>
-    <a class="direct-link"
-       href="{ep['mp4']}"
-       target="_blank"
-       onclick="event.stopPropagation()">
-       Direct MP4
-    </a>
-onst player = document.getElementById('player');
+        <div class="item" onclick="playVideo('{ep['mp4']}', this)">
+            <div>{ep['title']}</div>
+            <a class="direct-link"
+               href="{ep['mp4']}"
+               target="_blank"
+               onclickv>
+</div>
+
+<script>
+function playVideo(url, element) {
+    const player = document.getElementById('player');
     player.src = url;
     player.play();
 
-    document.querySelectorAll('.item').forEach(el => {
+    document.querySelectorAll('.item').forEach(function(el) {
         el.classList.remove('active');
     });
 
-    if (element) {
-        element.classList.add('active');
-    }
+    element.classList.add('active');
 }
 
 const firstItem = document.querySelector('.item');
