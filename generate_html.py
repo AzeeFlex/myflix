@@ -35,13 +35,15 @@ def extract_mp4(url):
         res = requests.get(url, headers=HEADERS, timeout=10)
 
         match = re.search(
-            r'engine\.getProxiedUrl\(\s*["\'](https?://[^"\']+\.']\s*\)',
+            r'https?://[^"\']+\.mp4',
             res.text,
+            re.IGNORECASE
         )
 
-        return match.group(1) if match else None
+        return match.group(0) if match else None
 
-    except Exception:
+    except Exception as e:
+        print(f"Error extracting MP4 from {url}: {e}")
         return None
 
 
